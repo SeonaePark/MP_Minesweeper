@@ -45,6 +45,10 @@ public class MainActivity extends AppCompatActivity {
             int x=0, y=0;
             x = rand.nextInt(9);
             y = rand.nextInt(9);
+            if(mines[x][y]){ //이미 지뢰가 있는 칸이라면 다시 지뢰 생성
+                i--;
+                continue;
+            }
             mines[x][y] = true;
         }
 
