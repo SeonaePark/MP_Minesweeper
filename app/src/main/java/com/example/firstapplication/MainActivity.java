@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+
+import org.w3c.dom.Text;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -26,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ToggleButton flag = (ToggleButton) findViewById(R.id.toggleButton);
         TextView mineCount = (TextView) findViewById(R.id.MineCount);
+        TextView winLose = (TextView) findViewById(R.id.winlose);
         TableLayout table;
         table = (TableLayout)findViewById(R.id.tableLayout);
 
@@ -48,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
             TableRow tableRow = new TableRow(this);
 
             for(int j=0; j<9; j++){
-//                buttons[i][j] = new Button(this);
                 buttons[i][j] = new BlockButton(this, i, j, mines[i][j]);
                 buttons[i][j].setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -59,8 +62,17 @@ public class MainActivity extends AppCompatActivity {
                         }
                         else  //토글버튼이 break면
                             if (((BlockButton) view).breakBlock()) { // 칸열기
-//                                ((BlockButton) view).open();
-
+                                ((BlockButton) view).open();
+                                winLose.setText("실패");
+                                winLose.setTextColor(Color.RED);
+                                winLose.bringToFront();
+                            }
+                            else {
+                                if(((BlockButton) view).getBlocks() == 10){
+                                    winLose.setText("성공");
+                                    winLose.setTextColor(Color.BLUE);
+                                    winLose.bringToFront();
+                                }
                             }
                     }
                 });

@@ -2,6 +2,7 @@ package com.example.firstapplication;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.text.style.BackgroundColorSpan;
 import android.view.View;
 
 import androidx.appcompat.widget.AppCompatButton;
@@ -14,6 +15,10 @@ class BlockButton extends AppCompatButton {
     static public int flags = 10;  //남은 깃발
     static int blocks = 81;  //남은 블록
 
+    public int getBlocks() {
+        return blocks;
+    }
+
     public BlockButton(Context context, int x, int y, boolean mine) {
         super(context);
         this.x = x;
@@ -21,8 +26,7 @@ class BlockButton extends AppCompatButton {
         this.mine = mine;
         this.flag = false;
         this.neighborMines = 0;
-//        this.flags = 0;
-//        this.blocks = 81;
+        setBackgroundResource(R.drawable.button_style);
     }
 
     public void toggleFlag(){
@@ -43,8 +47,8 @@ class BlockButton extends AppCompatButton {
         if(!isClickable())
             return false;
         setClickable(false);
-        setBackgroundColor(Color.parseColor("#FFFFFF"));
-
+        setEnabled(false);
+//        setBackgroundColor(Color.parseColor("#808080"));
         blocks--;
         if(mine){
             setText("*"); // 지뢰 표현
@@ -103,7 +107,8 @@ class BlockButton extends AppCompatButton {
 
         for(int i=0; i<9; i++){
             for(int j=0; j<9; j++){
-                MainActivity.buttons[x][y].breakBlock();
+                MainActivity.buttons[i][j].flag = false;
+                MainActivity.buttons[i][j].breakBlock();
             }
         }
 
